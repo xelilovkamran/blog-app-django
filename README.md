@@ -17,7 +17,7 @@ To run this project locally on your machine, follow these steps:
 1. **Clone the repository:**
 
 ```bash
-git https://github.com/xelilovkamran/blog-app-intern-project.git
+git clone https://github.com/xelilovkamran/blog-app-intern-project.git
 cd blog-app-intern-project/
 ```
 
