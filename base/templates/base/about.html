@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static "css/about.css" %}">
+{% endblock  %}
+
+{% block title %}
+    About Us
+{% endblock  %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-10  text-center">
+            <h1>{{ page.company_name }}</h1>
+            <p>{{ page.description }}</p>
+        </div>
+        
+        <a href="{% url "base:contact_us" %}" class="btn btn-outline-warning border-2 w-75">Contact Us</a>
+    </div>
+{% endblock  %}

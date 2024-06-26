@@ -1,0 +1,61 @@
+<header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <button
+                class="navbar-toggler mb-3"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul
+                    class="navbar-nav d-flex align-items-lg-center justify-content-lg-between w-100 px-lg-5 gap-lg-5 gap-3"
+                >
+                    <div class="d-flex flex-lg-row flex-column">
+                        <li class="nav-item">
+                            <a
+                                class="nav-link {% if request.path == '/' %}active{% endif %}"
+                                aria-current="page"
+                                href="{% url "base:home" %}"
+                                >Home</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/about/'%}active{% endif %}" href="{% url "base:about_us" %}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.path == '/contact/'%}active{% endif %}" href="{% url "base:contact_us" %}">Contact</a>
+                        </li>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                    <div class="btn-group d-flex flex-column">
+                        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{request.user.name}}
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url "base:logout" %}">logut</a></li>
+                        </ul>
+                    </div>
+                    {% else%}
+                    <div class="d-flex flex-lg-row flex-column gap-3">
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger" href="{% url 'base:sign-in' %}"
+                                >Sign in</a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success" href="{% url 'base:sign-up' %}"
+                                >Sign up</a
+                            >
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

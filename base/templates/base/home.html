@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static "css/home.css" %}">
+{% endblock  %}
+{% block title %}Home{% endblock  %}
+
+{% block content %}
+<div
+    class="d-flex flex-column flex-md-row gap-md-5 gap-3 align-items-start pt-5"
+>
+    <div class="d-flex flex-column w-md-50 gap-5">
+        {% if request.user.is_authenticated %}
+            <section style="background: #dadada" class="d-flex flex-column p-3 rounded-4">
+                <div style="width: 50px; height: 50px" class="d-flex justify-content-center w-100 mb-3">
+                    <img src="{{request.user.avatar.url}}" alt="avatar">
+                </div>
+                <p class="fw-bold">@{{request.user.username}} ({{request.user.name}})</p>
+                <div class="fw-bold mb-3">
+                    Created Blogs: {{request.user.blog_set.count}}
+                </div>
+                <a href="{% url "base:create-blog" %}" type="button" class="btn btn-success">Create New Blog</a>
+            </section>
+        {% endif %}
+
+        {% if categoriesContent %}
+            <section>
+                <div class="list-group">
+                    <a href="{% url "base:home" %}?category=all" class="list-group-item list-group-item-action {% if request.GET.category == 'all' or request.GET.category is None %}active{% endif %}">All</a>
+                    {% for categoryName, count in categoriesContent.items %}
+                    <a href="{% url "base:home" %}?category={{categoryName}}" class="list-group-item list-group-item-action {% if request.GET.category == categoryName %}active{% endif %}">{{categoryName}} <span class="badge text-bg-primary rounded-pill">{{count}}</span></a>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+    </div>
+
+
+    <section
+        class="d-flex flex-column align-items-center justify-content-center w-100"
+    >
+        <div class="w-100">
+            {% if blogs %}
+                {% for blog in blogs %}
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <a href="{% url 'base:blog-details' blog.id %}">
+                                <h5 class="card-title">{{blog.title}} - @{{blog.author.username}}</h5>
+                            </a>
+                            <p class="card-text">
+                                <div class="mb-3">
+                                    
+                                    {% for category in blog.category.all %}
+                                        <span class="badge text-bg-secondary">{{category}}</span>
+                                    {% endfor %}
+                                </div>
+                                <div class>
+                                    {{blog.content}}
+                                </div>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="card-text"><small class="text-body-secondary">created at <span class="text-black">{{blog.created_at}}</span></small></p>
+                                {% if blog.author == request.user %}
+                                    <div>
+                                        <button id="{{blog.id}}" class="btn btn-danger delete-btn">Delete</button>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <img src="{{blog.image.url}}" class="card-img-bottom" alt="Blog Image" style="max-height: 400px;">
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+</div>
+{% endblock  %}
+
+{% block script %}
+    <script>
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const confirmed = window.confirm('Are you sure to delete this blog?')
+                if (confirmed) {
+                    const blogId = e.target.id;
+                    const response = await fetch(`/blog/delete/${parseInt(blogId)}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRFToken': '{{csrf_token}}'
+                        }
+                    });
+                    e.target.parentElement.parentElement.parentElement.parentElement.remove();
+                }
+            });
+        });
+    </script>
+{% endblock  %}
