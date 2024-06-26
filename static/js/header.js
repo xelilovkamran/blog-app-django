@@ -13,7 +13,7 @@ async function getTemperature(cityName, API_KEY) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const navList = document.querySelector(".nav-right");
+    const navList = document.querySelector(".nav-left");
     const temperatureData = await getTemperature(
         "Baku",
         "eeb9d0aadd6bdfd0f0194aba3c64ed29"
@@ -21,5 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const li = document.createElement("li");
     li.classList.add("nav-item", "fw-bold");
     li.innerHTML = `<a class="nav-link" href="#">${temperatureData.main.temp}°C</a>`;
-    navList.insertBefore(li, navList.firstChild);
+    // navList.insertBefore(li, navList.firstChild);
+    navList.append(li);
 });
