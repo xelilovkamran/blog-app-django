@@ -8,6 +8,7 @@ This Django-based web application is a simple yet powerful blogging platform. It
 2. [Features](#features)
 3. [Technologies Used](#technologies-used)
 4. [Usage](#usage)
+5. [Demo](#demo)
 
 ## Installation
 
@@ -102,3 +103,7 @@ The application will be accessible at http://localhost:8000/.
 ![Home Page](static/img/home.png)
 
 ![Admin Page](static/img/admin.png)
+
+## Demo
+
+You can view the live demo [here](https://kamran00.pythonanywhere.com/)
