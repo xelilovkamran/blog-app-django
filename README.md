@@ -8,8 +8,6 @@ This Django-based web application is a simple yet powerful blogging platform. It
 2. [Features](#features)
 3. [Technologies Used](#technologies-used)
 4. [Usage](#usage)
-5. [Contributing](#contributing)
-6. [License](#license)
 
 ## Installation
 
@@ -89,7 +87,7 @@ The application will be accessible at http://localhost:8000/.
 -   Toastify.js
 -   Other relevant technologies
 
-## Using the Application
+## Usage
 
 -   Admin Interface: Access the Django admin panel at http://localhost:8000/admin/ to manage users, blog posts, and categories. Log in with the superuser credentials created earlier.
 
